@@ -1,4 +1,4 @@
-use std::{collections::HashMap, str::FromStr};
+use std::{collections::HashMap, str::FromStr, hash::Hash};
 
 use serde::{Deserialize, Serialize};
 
@@ -8,6 +8,12 @@ use crate::application::ports::{
 
 pub struct InMemoryAdapter {
     cache: HashMap<String, String>,
+}
+
+impl InMemoryAdapter {
+    pub fn new() -> InMemoryAdapter {
+        InMemoryAdapter { cache: HashMap::new() }
+    }
 }
 
 impl BankAccountRepository for InMemoryAdapter {
