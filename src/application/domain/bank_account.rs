@@ -6,9 +6,9 @@ pub struct BankAccount {
     /// It’s the amount you have in the account before any pending charges are added.
     account_balance: i64,
     /// Basically, an overdraft means that the bank allows customers to borrow a set amount of money.
-    /// There is interest on the loan, and there is typically a fee per overdraft. 
+    /// There is interest on the loan, and there is typically a fee per overdraft.
     /// At many banks, an overdraft fee can run upwards of $35.
-    overdraft_amount: i64
+    overdraft_amount: i64,
 }
 
 impl BankAccount {
@@ -17,7 +17,7 @@ impl BankAccount {
         BankAccount {
             id: Uuid::new_v4().to_string(),
             account_balance: default_account_balance,
-            overdraft_amount: 0
+            overdraft_amount: 0,
         }
     }
 
@@ -39,10 +39,9 @@ impl BankAccount {
         self.overdraft_amount
     }
 
-    pub fn get_account_balance(&self, ) -> i64 {
+    pub fn get_account_balance(&self) -> i64 {
         self.account_balance
     }
-
 }
 
 #[cfg(test)]

@@ -6,19 +6,19 @@ use banking::application::features::open_bank_account::open_bank_account;
 #[derive(Parser, Debug)]
 #[clap(author, version, about, long_about = None)]
 struct Args {
-   /// Open bank account
-   #[clap(long, short, action)]
-   open_bank_account: bool,
+    /// Open bank account
+    #[clap(long, short, action)]
+    open_bank_account: bool,
 }
 
 pub fn main() {
-   let args = Args::parse();
+    let args = Args::parse();
 
-   if args.open_bank_account {
-    let account = open_bank_account();
-    println!("Available funds {}", account.get_account_balance());
-    return;
-   }
+    if args.open_bank_account {
+        let account = open_bank_account();
+        println!("Available funds {}", account.get_account_balance());
+        return;
+    }
 
     println!("Should open bank account {}!", args.open_bank_account)
 }

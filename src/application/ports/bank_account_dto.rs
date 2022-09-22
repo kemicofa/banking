@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 pub struct BankAccountDTO {
     id: String,
     account_balance: i64,
-    overdraft_amount: i64
+    overdraft_amount: i64,
 }
 
 impl BankAccountDTO {
@@ -12,7 +12,7 @@ impl BankAccountDTO {
         BankAccountDTO {
             id,
             account_balance,
-            overdraft_amount
+            overdraft_amount,
         }
     }
 
