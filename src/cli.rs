@@ -15,10 +15,10 @@ pub fn main() {
     let args = Args::parse();
 
     if args.open_bank_account {
-        let account = open_bank_account(Box::new(InMemoryAdapter::new()));
-        println!("Available funds {}", account.get_account_balance());
+        let accountDTO = open_bank_account(Box::new(InMemoryAdapter::new()));
+        println!("{}", accountDTO.to_string());
         return;
     }
 
-    println!("Should open bank account {}!", args.open_bank_account)
+    println!("No arguments passed");
 }

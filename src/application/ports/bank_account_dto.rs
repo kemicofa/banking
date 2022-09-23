@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone)]
 pub struct BankAccountDTO {
     id: String,
     account_balance: i64,
@@ -16,7 +16,19 @@ impl BankAccountDTO {
         }
     }
 
-    pub fn getId(&self) -> String {
+    pub fn get_id(&self) -> String {
         self.id.clone()
+    }
+
+    pub fn to_string(&self) -> String {
+        r#"
+            Account id: :id
+            Account balance: :account_balance
+            Overdraft amount: :overdraft_amount
+        "#.
+        to_string()
+        .replace(":id", &self.id)
+        .replace(":account_balance", &self.account_balance.to_string())
+        .replace(":overdraft_amount", &self.overdraft_amount.to_string())
     }
 }

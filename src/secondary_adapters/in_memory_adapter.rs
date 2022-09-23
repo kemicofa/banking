@@ -21,7 +21,7 @@ impl BankAccountRepository for InMemoryAdapter {
         let result = serde_json::to_string(&bank_account_dto);
 
         match result {
-            Ok(json) => self.cache.to_owned().insert(bank_account_dto.getId(), json),
+            Ok(json) => self.cache.to_owned().insert(bank_account_dto.get_id(), json),
             Err(_) => return Err(String::from("Failed serializing data")),
         };
 
