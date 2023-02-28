@@ -18,8 +18,3 @@ features = [
     "fast-rng",          # Use a faster (but still sufficiently random) RNG
     "macro-diagnostics", # Enable better diagnostics for compile-time UUIDs
 ]
-
-
-[[bin]]
-name = "banking-cli"
-path = "src/cli.rs"

@@ -2,11 +2,13 @@ use crate::application::ports::{
     bank_account_dto::BankAccountDTO,
     bank_account_repository::BankAccountRepository,
 };
+use uuid::Uuid;
 
 use super::super::domain::bank_account::BankAccount;
 
 pub fn open_bank_account(bank_repository: Box<dyn BankAccountRepository>) -> BankAccountDTO {
-    let account = BankAccount::new(0);
+    let id =  Uuid::new_v4().to_string();
+    let account = BankAccount::new(id, 0);
     let bank_account_dto = BankAccountDTO::new(
         account.get_id(),
         account.get_account_balance(),

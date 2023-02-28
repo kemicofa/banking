@@ -8,8 +8,8 @@ pub struct BankAccountDTO {
 }
 
 impl BankAccountDTO {
-    pub fn new(id: String, account_balance: i64, overdraft_amount: i64) -> BankAccountDTO {
-        BankAccountDTO {
+    pub fn new(id: String, account_balance: i64, overdraft_amount: i64) -> Self {
+        Self {
             id,
             account_balance,
             overdraft_amount,
