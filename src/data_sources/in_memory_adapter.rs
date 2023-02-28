@@ -11,8 +11,8 @@ pub struct InMemoryAdapter {
 }
 
 impl InMemoryAdapter {
-    pub fn new() -> InMemoryAdapter {
-        InMemoryAdapter { cache: HashMap::new() }
+    pub fn new() -> Self {
+        Self { cache: HashMap::new() }
     }
 }
 

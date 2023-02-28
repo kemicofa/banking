@@ -56,7 +56,7 @@ mod tests {
 
     #[test]
     fn it_should_be_able_to_add_funds() {
-        let mut account: BankAccount = Account::new(100);
+        let mut account = BankAccount::new(100);
         account.add_funds(100);
         assert_eq!(account.account_balance, 200);
     }

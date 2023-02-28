@@ -1,6 +1,6 @@
 use clap::Parser;
-use banking::secondary_adapters::in_memory_adapter::InMemoryAdapter;
-use banking::application::features::open_bank_account::open_bank_account;
+use crate::application::features::open_bank_account::open_bank_account;
+use crate::data_sources::in_memory_adapter::InMemoryAdapter;
 
 /// Command Line Interface for bank account
 #[derive(Parser, Debug)]
