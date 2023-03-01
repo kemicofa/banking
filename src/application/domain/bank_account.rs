@@ -49,7 +49,11 @@ impl BankAccount {
 
 impl fmt::Display for BankAccount {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "BankAccount ({}) with account balance ({})", self.id, self.account_balance)
+        write!(
+            f,
+            "BankAccount ({}) with account balance ({})",
+            self.id, self.account_balance
+        )
     }
 }
 
@@ -71,7 +75,5 @@ mod tests {
     }
 
     #[test]
-    fn it_should_be_able_display_a_bank_account() {
-
-    }
+    fn it_should_be_able_display_a_bank_account() {}
 }

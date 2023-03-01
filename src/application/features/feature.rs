@@ -1,3 +1,3 @@
-pub trait Feature <Input, Output> {
+pub trait Feature<Input, Output> {
     fn execute(&self, input: Option<Input>) -> Result<Output, String>;
 }

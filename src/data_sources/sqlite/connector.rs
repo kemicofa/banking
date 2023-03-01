@@ -3,7 +3,7 @@ use rusqlite::{Connection, Params};
 use super::consts::SQL_DATABASE;
 
 pub struct SqliteConnector {
-    conn: Connection
+    conn: Connection,
 }
 
 impl SqliteConnector {
@@ -12,7 +12,7 @@ impl SqliteConnector {
 
         let conn = match connection_result {
             Ok(conn) => conn,
-            Err(_) => panic!("Failed connecting to sqlite")
+            Err(_) => panic!("Failed connecting to sqlite"),
         };
 
         conn.execute(
@@ -20,9 +20,7 @@ impl SqliteConnector {
             (), // empty list of parameters.
         );
 
-        Self {
-            conn
-        }
+        Self { conn }
     }
 
     pub fn execute<P: Params>(&self, sql: &str, params: P) -> Result<usize, rusqlite::Error> {

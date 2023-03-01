@@ -1,6 +1,6 @@
-use clap::Parser;
 use crate::application::features::feature::Feature;
 use crate::infrastructure::Container;
+use clap::Parser;
 
 /// Command Line Interface for bank account
 #[derive(Parser, Debug)]
@@ -17,7 +17,7 @@ pub fn run(container: Container) {
     if args.open_bank_account {
         match container.open_bank_account.execute(None) {
             Ok(bank_account) => println!("{}", bank_account),
-            Err(err) => panic!("{}", err)
+            Err(err) => panic!("{}", err),
         }
         return;
     }

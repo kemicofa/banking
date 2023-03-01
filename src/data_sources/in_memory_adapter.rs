@@ -1,7 +1,7 @@
-use std::{collections::HashMap};
-use crate::application::{ports::{
-    bank_account_repository::BankAccountRepository,
-}, domain::bank_account::BankAccount};
+use crate::application::{
+    domain::bank_account::BankAccount, ports::bank_account_repository::BankAccountRepository,
+};
+use std::collections::HashMap;
 
 pub struct InMemoryAdapter {
     cache: HashMap<String, String>,
@@ -9,7 +9,9 @@ pub struct InMemoryAdapter {
 
 impl InMemoryAdapter {
     pub fn new() -> Self {
-        Self { cache: HashMap::new() }
+        Self {
+            cache: HashMap::new(),
+        }
     }
 }
 
@@ -18,7 +20,10 @@ impl BankAccountRepository for InMemoryAdapter {
         let result = serde_json::to_string(&bank_account_dto);
 
         match result {
-            Ok(json) => self.cache.to_owned().insert(bank_account_dto.get_id(), json),
+            Ok(json) => self
+                .cache
+                .to_owned()
+                .insert(bank_account_dto.get_id(), json),
             Err(_) => return Err("Failed serializing data".to_string()),
         };
 
