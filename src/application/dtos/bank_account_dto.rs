@@ -20,6 +20,10 @@ impl BankAccountDTO {
         self.id.clone()
     }
 
+    pub fn get_account_balance(&self) -> i64 {
+        self.account_balance
+    }
+
     pub fn to_string(&self) -> String {
         r#"
             Account id: :id
