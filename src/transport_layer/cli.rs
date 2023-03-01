@@ -1,6 +1,6 @@
 use clap::Parser;
-use crate::application::features::open_bank_account::open_bank_account;
-use crate::data_sources::in_memory_adapter::InMemoryAdapter;
+use crate::application::features::feature::Feature;
+use crate::infrastructure::Container;
 
 /// Command Line Interface for bank account
 #[derive(Parser, Debug)]
@@ -11,12 +11,14 @@ struct Args {
     open_bank_account: bool,
 }
 
-pub fn main() {
+pub fn run(container: Container) {
     let args = Args::parse();
 
     if args.open_bank_account {
-        let accountDTO = open_bank_account(Box::new(InMemoryAdapter::new()));
-        println!("{}", accountDTO.to_string());
+        match container.open_bank_account.execute(None) {
+            Ok(bank_account) => println!("{}", bank_account),
+            Err(err) => panic!("{}", err)
+        }
         return;
     }
 

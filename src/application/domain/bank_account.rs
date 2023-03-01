@@ -1,5 +1,8 @@
 use std::fmt;
 
+use serde::{Deserialize, Serialize};
+
+#[derive(Serialize, Deserialize, Clone)]
 pub struct BankAccount {
     id: String,
     /// The account balance is made up of all posted credit and debit transactions.

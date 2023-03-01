@@ -1,1 +1,0 @@
-pub const OPEN_BANK_ACCOUNT: &'static str = "OPEN_BANK_ACCOUNT";
