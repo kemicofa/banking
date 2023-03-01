@@ -17,7 +17,7 @@ impl BankAccountPersistence {
 impl BankAccountRepository for BankAccountPersistence {
     fn insert(&self, bank_account_dto: &BankAccount) -> Result<(), String> {
         let result = self.connector.execute(
-            "INSERT INTO person (id, account_balance) VALUES (?1, ?2)",
+            "INSERT INTO bankaccounts (id, account_balance) VALUES (?1, ?2)",
             (
                 bank_account_dto.get_id(),
                 bank_account_dto.get_account_balance(),

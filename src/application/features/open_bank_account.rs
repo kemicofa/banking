@@ -21,7 +21,7 @@ impl Feature<(), BankAccount> for OpenBankAccount {
         let bank_account = BankAccount::new(id, 0);
         match self.bank_account_repository.insert(&bank_account) {
             Ok(()) => Ok(bank_account),
-            Err(_) => Err("Uh oh an error occurred while inserting".to_string()),
+            Err(err) => Err(err),
         }
     }
 }

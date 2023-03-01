@@ -2,9 +2,9 @@ use crate::{
     application::{
         features::{
             feature::Feature,
-            open_bank_account::{self, OpenBankAccount},
+            open_bank_account::OpenBankAccount,
         },
-        ports::bank_account_repository::{self, BankAccountRepository},
+        ports::bank_account_repository::BankAccountRepository,
     },
     data_sources::sqlite::{
         bank_account_persistence::BankAccountPersistence, connector::SqliteConnector,
