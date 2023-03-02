@@ -1,15 +1,20 @@
-use crate::application::{ports::{transaction_repository::TransactionRepository}, domain::transaction::Transaction};
+use crate::application::{ports::{transaction_repository::TransactionRepository, bank_account_repository::BankAccountRepository}, domain::transaction::Transaction};
 use uuid::Uuid;
 
 use super::{feature::Feature};
 
 pub struct InitiateTransaction {
+    bank_account_repository: Box<dyn BankAccountRepository>,
     transaction_repository: Box<dyn TransactionRepository>,
 }
 
 impl  InitiateTransaction {
-    pub fn new(transaction_repository: Box<dyn TransactionRepository>) -> Self {
+    pub fn new(
+        bank_account_repository: Box<dyn BankAccountRepository>,
+        transaction_repository: Box<dyn TransactionRepository>
+    ) -> Self {
         Self {
+            bank_account_repository,
             transaction_repository,
         }
     }
@@ -27,10 +32,19 @@ impl  Feature<TransactionPayload, Transaction> for InitiateTransaction {
         let payload = option_payload.unwrap();
         let transaction = Transaction::new(
             id, 
-            payload.from,
-            payload.to,
+            payload.from.clone(),
+            payload.to.clone(),
             payload.amount
         );
+        let mut bank_account_from = self.bank_account_repository.get(payload.from.clone()).unwrap();
+        let mut bank_account_to = self.bank_account_repository.get(payload.to.clone()).unwrap(); 
+        
+        bank_account_from.remove_funds(payload.amount);
+        bank_account_to.add_funds(payload.amount);
+
+        self.bank_account_repository.update(bank_account_from).unwrap();
+        self.bank_account_repository.update(bank_account_to).unwrap();
+
         match self.transaction_repository.insert(&transaction) {
             Ok(()) => Ok(transaction),
             Err(err) => Err(err),

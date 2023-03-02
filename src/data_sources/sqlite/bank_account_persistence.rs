@@ -50,4 +50,40 @@ impl BankAccountRepository for BankAccountPersistence {
         
         Ok(bank_accounts)
     }
+
+    fn get(&self, id: String) -> Result<BankAccount, String> {
+        let stmt = self.connector.prepare(
+            "SELECT id, fullname, account_balance FROM bankaccounts WHERE id = :id;",
+        );
+        let mut binding = stmt.unwrap();
+        let bank_accounts_iter = binding.query_map(&[(":id", id.as_str())], |row| {
+            Ok(BankAccount::new(
+                row.get(0).unwrap(),
+                row.get(1).unwrap(),
+                row.get(2).unwrap()
+            ))
+        }).unwrap();
+
+        let bank_account: Vec<BankAccount> = bank_accounts_iter
+            .map(|option_bank_account| option_bank_account.unwrap())
+            .collect();
+
+        Ok(bank_account[0].clone())
+    }
+
+    fn update(&self, bank_account: BankAccount) -> Result<(), String> {
+        let result = self.connector.execute(
+            "UPDATE bankaccounts SET fullname = ?1, account_balance = ?2 WHERE id = ?3",
+            (
+                bank_account.fullname.clone(),
+                bank_account.account_balance,
+                bank_account.id.clone(),
+            ),
+        );
+
+        match result {
+            Err(err) => Err(err.to_string()),
+            Ok(_) => Ok(()),
+        }
+    }
 }

@@ -30,8 +30,9 @@ impl  Container {
     pub fn new() -> Self {
         let bank_account_repository_1 = build_bank_account_repository();
         let bank_account_repository_2 = build_bank_account_repository();
+        let bank_account_repository_3 = build_bank_account_repository();
         let transaction_repository = build_transaction_repository();
-        let initiate_transaction = InitiateTransaction::new(Box::new(transaction_repository));
+        let initiate_transaction = InitiateTransaction::new(Box::new(bank_account_repository_3), Box::new(transaction_repository));
         let open_bank_account = OpenBankAccount::new(Box::new(bank_account_repository_1));
         Self { 
             open_bank_account: Box::new(open_bank_account),
