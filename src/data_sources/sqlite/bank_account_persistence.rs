@@ -30,4 +30,24 @@ impl BankAccountRepository for BankAccountPersistence {
             Ok(_) => Ok(()),
         }
     }
+
+    fn query(&self) -> Result<Vec<BankAccount>, String> {
+        let stmt = self.connector.prepare(
+            "SELECT id, fullname, account_balance FROM bankaccounts"
+        );
+        let mut binding = stmt.unwrap();
+        let bank_accounts_iter = binding.query_map([], |row| {
+            Ok(BankAccount::new(
+                row.get(0).unwrap(),
+                row.get(1).unwrap(),
+                row.get(2).unwrap()
+            ))
+        }).unwrap();
+
+        let bank_accounts = bank_accounts_iter
+            .map(|option_bank_account| option_bank_account.unwrap())
+            .collect();
+        
+        Ok(bank_accounts)
+    }
 }

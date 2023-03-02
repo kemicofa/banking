@@ -4,5 +4,6 @@ pub const SQL_DATABASE: &'static str = r#"
         fullname            TEXT NOT NULL,
         account_balance     INT NOT NULL,
         created_at          DATETIME DEFAULT CURRENT_TIMESTAMP
-    )
+    );
+    INSERT OR IGNORE INTO bankaccounts (id, fullname, account_balance) VALUES ("0", "Shine", 100000000);
 "#;

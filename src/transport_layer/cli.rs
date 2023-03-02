@@ -15,7 +15,8 @@ enum Command {
     #[command(arg_required_else_help = true)]
     OpenBankAccount {
         fullname: String
-    }
+    },
+    ListBankAccounts
 }
 
 pub fn run(container: Container) {
@@ -26,7 +27,17 @@ pub fn run(container: Container) {
             match container.open_bank_account.execute(Some(fullname)) {
                 Ok(bank_account) => println!("{bank_account}"),
                 Err(err) => panic!("{err}"),
-            }
+            };
+        },
+        Command::ListBankAccounts => {
+            match container.bank_account_repository.query() {
+                Ok(bank_accounts) => {
+                    for bank_account in bank_accounts {
+                        println!("{bank_account}");
+                    }
+                },
+                Err(err) => panic!("{err}"),
+            };
         }
     }
 

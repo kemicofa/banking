@@ -35,8 +35,8 @@ impl fmt::Display for BankAccount {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(
             f,
-            "{}'s bank account ({}) with balance ({})",
-            self.fullname, self.id, self.account_balance
+            "> {}'s bank account ({}) with balance {:.2} €",
+            self.fullname, self.id, (self.account_balance as f64)/100.0
         )
     }
 }

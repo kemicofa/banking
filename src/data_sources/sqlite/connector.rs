@@ -1,6 +1,6 @@
 use std::{fs::{self, File}, path::Path};
 
-use rusqlite::{Connection, Params, OpenFlags};
+use rusqlite::{Connection, Params, OpenFlags, Statement, Error};
 
 use super::consts::SQL_DATABASE;
 
@@ -36,5 +36,9 @@ impl SqliteConnector {
 
     pub fn execute<P: Params>(&self, sql: &str, params: P) -> Result<usize, rusqlite::Error> {
         self.conn.execute(sql, params)
+    }
+
+    pub fn prepare(&self, sql: &str) -> Result<Statement, Error> {
+        self.conn.prepare(sql)
     }
 }
