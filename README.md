@@ -1,7 +1,7 @@
 # Banking
 
-## CLI
+An example application that handles banking operations
 
 ```
-$ cargo run banking-cli -- openBankAccount
+cargo doc --open
 ```
