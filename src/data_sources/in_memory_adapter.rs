@@ -16,14 +16,14 @@ impl InMemoryAdapter {
 }
 
 impl BankAccountRepository for InMemoryAdapter {
-    fn insert(self: &InMemoryAdapter, bank_account_dto: &BankAccount) -> Result<(), String> {
-        let result = serde_json::to_string(&bank_account_dto);
+    fn insert(self: &InMemoryAdapter, bank_account: &BankAccount) -> Result<(), String> {
+        let result = serde_json::to_string(&bank_account);
 
         match result {
             Ok(json) => self
                 .cache
                 .to_owned()
-                .insert(bank_account_dto.get_id(), json),
+                .insert(bank_account.id.clone(), json),
             Err(_) => return Err("Failed serializing data".to_string()),
         };
 

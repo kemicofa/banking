@@ -15,12 +15,13 @@ impl BankAccountPersistence {
 }
 
 impl BankAccountRepository for BankAccountPersistence {
-    fn insert(&self, bank_account_dto: &BankAccount) -> Result<(), String> {
+    fn insert(&self, bank_account: &BankAccount) -> Result<(), String> {
         let result = self.connector.execute(
-            "INSERT INTO bankaccounts (id, account_balance) VALUES (?1, ?2)",
+            "INSERT INTO bankaccounts (id, fullname, account_balance) VALUES (?1, ?2, ?3)",
             (
-                bank_account_dto.get_id(),
-                bank_account_dto.get_account_balance(),
+                bank_account.id.clone(),
+                bank_account.fullname.clone(),
+                bank_account.account_balance,
             ),
         );
 

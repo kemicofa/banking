@@ -1,7 +1,6 @@
 use crate::{
     application::{
         features::{
-            feature::Feature,
             open_bank_account::OpenBankAccount,
         },
         ports::bank_account_repository::BankAccountRepository,
