@@ -1,4 +1,4 @@
-use crate::application::features::feature::Feature;
+use crate::application::features::{feature::Feature, initiate_transaction::TransactionPayload};
 use crate::infrastructure::Container;
 use clap::{Parser, command, Subcommand};
 
@@ -16,7 +16,12 @@ enum Command {
     OpenBankAccount {
         fullname: String
     },
-    ListBankAccounts
+    ListBankAccounts,
+    InitiateTransaction {
+        from: String,
+        to: String,
+        amount: i64
+    }
 }
 
 pub fn run(container: Container) {
@@ -38,8 +43,17 @@ pub fn run(container: Container) {
                 },
                 Err(err) => panic!("{err}"),
             };
-        }
-    }
-
-    println!("No arguments passed");
+        },
+        Command::InitiateTransaction { to, from, amount } => {
+            let transaction_payload = TransactionPayload {
+                to,
+                from,
+                amount
+            };
+            match container.initiate_transaction.execute(Some(transaction_payload)) {
+                Ok(transaction) => println!("{transaction}"),
+                Err(err) => panic!("{err}"),
+            }
+        },
+    };
 }

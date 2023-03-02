@@ -26,9 +26,8 @@ impl SqliteConnector {
             Err(err) => panic!("{}", err),
         };
 
-        conn.execute(
+        conn.execute_batch(
             SQL_DATABASE,
-            (), // empty list of parameters.
         ).unwrap();
 
         Self { conn }

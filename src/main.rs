@@ -8,5 +8,5 @@ pub mod transport_layer;
 
 pub fn main() {
     let container = Container::new();
-    run(container)
+    run(container);
 }
