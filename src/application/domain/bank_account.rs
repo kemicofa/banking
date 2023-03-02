@@ -63,5 +63,10 @@ mod tests {
     }
 
     #[test]
-    fn it_should_be_able_display_a_bank_account() {}
+    fn it_should_be_able_to_remove_funds() {
+        let mut account =
+            BankAccount::new("__BANK_ACOUNT_ID__".to_string(), FULLNAME.to_string(), 100);
+        account.remove_funds(100);
+        assert_eq!(account.account_balance, 0);
+    }
 }
