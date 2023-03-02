@@ -1,6 +1,9 @@
-use std::{fs::{self, File}, path::Path};
+use std::{
+    fs::{self, File},
+    path::Path,
+};
 
-use rusqlite::{Connection, Params, OpenFlags, Statement, Error};
+use rusqlite::{Connection, Error, OpenFlags, Params, Statement};
 
 use super::consts::SQL_DATABASE;
 
@@ -14,21 +17,19 @@ const DATABASE_NAME: &'static str = "data.db";
 impl SqliteConnector {
     pub fn new() -> Self {
         let path = DATABASE_DIR.to_string() + "/" + DATABASE_NAME;
-        fs::create_dir_all(DATABASE_DIR)
-            .expect("Unable to create directories for sqlite database");
+        fs::create_dir_all(DATABASE_DIR).expect("Unable to create directories for sqlite database");
         if !Path::new(&path.to_string()).exists() {
             File::create(path.clone()).expect("Could not create database file for sqlite");
         }
-        let connection_result = Connection::open_with_flags(path, OpenFlags::SQLITE_OPEN_READ_WRITE);
+        let connection_result =
+            Connection::open_with_flags(path, OpenFlags::SQLITE_OPEN_READ_WRITE);
 
         let conn = match connection_result {
             Ok(conn) => conn,
             Err(err) => panic!("{}", err),
         };
 
-        conn.execute_batch(
-            SQL_DATABASE,
-        ).unwrap();
+        conn.execute_batch(SQL_DATABASE).unwrap();
 
         Self { conn }
     }

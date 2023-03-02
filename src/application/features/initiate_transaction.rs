@@ -1,17 +1,23 @@
-use crate::application::{ports::{transaction_repository::TransactionRepository, bank_account_repository::BankAccountRepository}, domain::transaction::Transaction};
+use crate::application::{
+    domain::transaction::Transaction,
+    ports::{
+        bank_account_repository::BankAccountRepository,
+        transaction_repository::TransactionRepository,
+    },
+};
 use uuid::Uuid;
 
-use super::{feature::Feature};
+use super::feature::Feature;
 
 pub struct InitiateTransaction {
     bank_account_repository: Box<dyn BankAccountRepository>,
     transaction_repository: Box<dyn TransactionRepository>,
 }
 
-impl  InitiateTransaction {
+impl InitiateTransaction {
     pub fn new(
         bank_account_repository: Box<dyn BankAccountRepository>,
-        transaction_repository: Box<dyn TransactionRepository>
+        transaction_repository: Box<dyn TransactionRepository>,
     ) -> Self {
         Self {
             bank_account_repository,
@@ -23,27 +29,33 @@ impl  InitiateTransaction {
 pub struct TransactionPayload {
     pub to: String,
     pub from: String,
-    pub amount: i64
+    pub amount: i64,
 }
 
-impl  Feature<TransactionPayload, Transaction> for InitiateTransaction {
+impl Feature<TransactionPayload, Transaction> for InitiateTransaction {
     fn execute(&self, option_payload: Option<TransactionPayload>) -> Result<Transaction, String> {
         let id = Uuid::new_v4().to_string();
         let payload = option_payload.unwrap();
-        let transaction = Transaction::new(
-            id, 
-            payload.from.clone(),
-            payload.to.clone(),
-            payload.amount
-        );
-        let mut bank_account_from = self.bank_account_repository.get(payload.from.clone()).unwrap();
-        let mut bank_account_to = self.bank_account_repository.get(payload.to.clone()).unwrap(); 
-        
+        let transaction =
+            Transaction::new(id, payload.from.clone(), payload.to.clone(), payload.amount);
+        let mut bank_account_from = self
+            .bank_account_repository
+            .get(payload.from.clone())
+            .unwrap();
+        let mut bank_account_to = self
+            .bank_account_repository
+            .get(payload.to.clone())
+            .unwrap();
+
         bank_account_from.remove_funds(payload.amount);
         bank_account_to.add_funds(payload.amount);
 
-        self.bank_account_repository.update(bank_account_from).unwrap();
-        self.bank_account_repository.update(bank_account_to).unwrap();
+        self.bank_account_repository
+            .update(bank_account_from)
+            .unwrap();
+        self.bank_account_repository
+            .update(bank_account_to)
+            .unwrap();
 
         match self.transaction_repository.insert(&transaction) {
             Ok(()) => Ok(transaction),

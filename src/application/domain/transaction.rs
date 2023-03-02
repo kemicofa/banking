@@ -15,7 +15,7 @@ impl Transaction {
             id,
             from,
             to,
-            amount
+            amount,
         }
     }
 }
@@ -25,7 +25,9 @@ impl fmt::Display for Transaction {
         write!(
             f,
             "> Transaction from ({}) to ({}) of amount {:.2} €",
-            self.from, self.to, (self.amount as f64)/100.0
+            self.from,
+            self.to,
+            (self.amount as f64) / 100.0
         )
     }
 }

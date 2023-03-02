@@ -1,5 +1,5 @@
 use crate::application::{
-    domain::{transaction::Transaction}, ports::transaction_repository::TransactionRepository,
+    domain::transaction::Transaction, ports::transaction_repository::TransactionRepository,
 };
 
 use super::connector::SqliteConnector;
@@ -22,7 +22,7 @@ impl TransactionRepository for TransactionPersistence {
                 transaction.id.clone(),
                 transaction.from.clone(),
                 transaction.to.clone(),
-                transaction.amount
+                transaction.amount,
             ),
         );
 
