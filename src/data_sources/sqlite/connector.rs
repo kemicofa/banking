@@ -1,7 +1,7 @@
 use std::{
     env,
     fs::{self, File},
-    path::{Path, PathBuf},
+    path::Path,
 };
 
 use rusqlite::{Connection, Error, OpenFlags, Params, Statement};

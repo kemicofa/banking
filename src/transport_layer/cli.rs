@@ -29,7 +29,7 @@ pub fn run(container: Container) {
 
     match args.cmd {
         Command::OpenBankAccount { fullname } => {
-            match container.open_bank_account.execute(Some(fullname)) {
+            match container.open_bank_account.execute(fullname) {
                 Ok(bank_account) => println!("{bank_account}"),
                 Err(err) => panic!("{err}"),
             };
@@ -46,10 +46,7 @@ pub fn run(container: Container) {
         }
         Command::InitiateTransaction { to, from, amount } => {
             let transaction_payload = TransactionPayload { to, from, amount };
-            match container
-                .initiate_transaction
-                .execute(Some(transaction_payload))
-            {
+            match container.initiate_transaction.execute(transaction_payload) {
                 Ok(transaction) => println!("{transaction}"),
                 Err(err) => panic!("{err}"),
             }

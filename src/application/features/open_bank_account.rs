@@ -18,9 +18,9 @@ impl OpenBankAccount {
 }
 
 impl Feature<String, BankAccount> for OpenBankAccount {
-    fn execute(&self, option_fullname: Option<String>) -> Result<BankAccount, String> {
+    fn execute(&self, fullname: String) -> Result<BankAccount, String> {
         let id = Uuid::new_v4().to_string();
-        let bank_account = BankAccount::new(id, option_fullname.unwrap(), 0);
+        let bank_account = BankAccount::new(id, fullname, 0);
         match self.bank_account_repository.insert(&bank_account) {
             Ok(()) => Ok(bank_account),
             Err(err) => Err(err),

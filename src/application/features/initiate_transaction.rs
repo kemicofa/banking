@@ -35,9 +35,8 @@ pub struct TransactionPayload {
 }
 
 impl Feature<TransactionPayload, Transaction> for InitiateTransaction {
-    fn execute(&self, option_payload: Option<TransactionPayload>) -> Result<Transaction, String> {
+    fn execute(&self, payload: TransactionPayload) -> Result<Transaction, String> {
         let id = Uuid::new_v4().to_string();
-        let payload = option_payload.unwrap();
         let transaction =
             Transaction::new(id, payload.from.clone(), payload.to.clone(), payload.amount);
         let mut bank_account_from = self
