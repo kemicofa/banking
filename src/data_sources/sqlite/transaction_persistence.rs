@@ -1,3 +1,5 @@
+use std::rc::Rc;
+
 use crate::application::{
     domain::transaction::Transaction, ports::transaction_repository::TransactionRepository,
 };
@@ -5,11 +7,11 @@ use crate::application::{
 use super::connector::SqliteConnector;
 
 pub struct TransactionPersistence {
-    connector: Box<SqliteConnector>,
+    connector: Rc<SqliteConnector>,
 }
 
 impl TransactionPersistence {
-    pub fn new(connector: Box<SqliteConnector>) -> Self {
+    pub fn new(connector: Rc<SqliteConnector>) -> Self {
         Self { connector }
     }
 }

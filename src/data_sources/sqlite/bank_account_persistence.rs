@@ -1,3 +1,5 @@
+use std::rc::Rc;
+
 use crate::application::{
     domain::bank_account::BankAccount, ports::bank_account_repository::BankAccountRepository,
 };
@@ -5,11 +7,11 @@ use crate::application::{
 use super::connector::SqliteConnector;
 
 pub struct BankAccountPersistence {
-    connector: Box<SqliteConnector>,
+    connector: Rc<SqliteConnector>,
 }
 
 impl BankAccountPersistence {
-    pub fn new(connector: Box<SqliteConnector>) -> Self {
+    pub fn new(connector: Rc<SqliteConnector>) -> Self {
         Self { connector }
     }
 }

@@ -1,14 +1,16 @@
+use std::rc::Rc;
+
 use crate::application::ports::bank_account_repository::BankAccountRepository;
 use uuid::Uuid;
 
 use super::{super::domain::bank_account::BankAccount, feature::Feature};
 
 pub struct OpenBankAccount {
-    bank_account_repository: Box<dyn BankAccountRepository>,
+    bank_account_repository: Rc<dyn BankAccountRepository>,
 }
 
 impl OpenBankAccount {
-    pub fn new(bank_account_repository: Box<dyn BankAccountRepository>) -> Self {
+    pub fn new(bank_account_repository: Rc<dyn BankAccountRepository>) -> Self {
         Self {
             bank_account_repository,
         }

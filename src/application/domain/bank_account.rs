@@ -2,9 +2,9 @@ use std::fmt;
 
 use serde::{Deserialize, Serialize};
 
-/// A bank account is a financial account provided by a bank or other financial institution to an 
-/// individual or business entity that allows them to deposit, withdraw, and manage money. Bank 
-/// accounts can be used for various purposes such as storing money, receiving and making payments, 
+/// A bank account is a financial account provided by a bank or other financial institution to an
+/// individual or business entity that allows them to deposit, withdraw, and manage money. Bank
+/// accounts can be used for various purposes such as storing money, receiving and making payments,
 /// and earning interest on deposits.
 #[derive(Serialize, Deserialize, Clone)]
 pub struct BankAccount {
@@ -17,18 +17,18 @@ pub struct BankAccount {
 
 impl BankAccount {
     /// Returns a bank account
-    /// 
+    ///
     /// # Arguments
     /// * `id` - A string representing the unique id of the bank account
     /// * `fullname`- Fullname of the owner of the bank account
     /// * `default_account_balance` - initial amount of the bank account. Divide by 100 to find the amount in euros.
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```
     /// let bank_account = BankAccount::new("my-unique-id", "Kevin", 0);
     /// ```
-    /// 
+    ///
     pub fn new(id: String, fullname: String, default_account_balance: i64) -> BankAccount {
         // TODO: add validation for default account balance
         BankAccount {
@@ -38,10 +38,10 @@ impl BankAccount {
         }
     }
 
-    /// Adding funds to a bank account means depositing money into the account, 
-    /// which increases the balance available for the account holder to use. 
-    /// This can be done by physically depositing cash or a check at a bank 
-    /// branch, using an ATM to deposit cash or checks, or electronically 
+    /// Adding funds to a bank account means depositing money into the account,
+    /// which increases the balance available for the account holder to use.
+    /// This can be done by physically depositing cash or a check at a bank
+    /// branch, using an ATM to deposit cash or checks, or electronically
     /// transferring funds from another account.
     pub fn add_funds(&mut self, funds: i64) {
         self.account_balance += funds;

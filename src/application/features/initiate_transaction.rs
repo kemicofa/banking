@@ -1,3 +1,5 @@
+use std::rc::Rc;
+
 use crate::application::{
     domain::transaction::Transaction,
     ports::{
@@ -10,14 +12,14 @@ use uuid::Uuid;
 use super::feature::Feature;
 
 pub struct InitiateTransaction {
-    bank_account_repository: Box<dyn BankAccountRepository>,
-    transaction_repository: Box<dyn TransactionRepository>,
+    bank_account_repository: Rc<dyn BankAccountRepository>,
+    transaction_repository: Rc<dyn TransactionRepository>,
 }
 
 impl InitiateTransaction {
     pub fn new(
-        bank_account_repository: Box<dyn BankAccountRepository>,
-        transaction_repository: Box<dyn TransactionRepository>,
+        bank_account_repository: Rc<dyn BankAccountRepository>,
+        transaction_repository: Rc<dyn TransactionRepository>,
     ) -> Self {
         Self {
             bank_account_repository,
