@@ -1,18 +1,11 @@
 use std::rc::Rc;
 
-use crate::{
-    application::{
-        features::{initiate_transaction::InitiateTransaction, open_bank_account::OpenBankAccount},
-        ports::{
-            bank_account_repository::BankAccountRepository,
-            transaction_repository::TransactionRepository,
-        },
-    },
-    data_sources::sqlite::{
-        bank_account_persistence::BankAccountPersistence, connector::SqliteConnector,
-        transaction_persistence::TransactionPersistence,
-    },
-};
+use crate::application::{features::{open_bank_account::OpenBankAccount, initiate_transaction::InitiateTransaction}, ports::{bank_account_repository::BankAccountRepository, transaction_repository::TransactionRepository}};
+
+use self::data_sources::sqlite::{connector::SqliteConnector, transaction_persistence::TransactionPersistence, bank_account_persistence::BankAccountPersistence};
+
+pub mod transport_layer;
+pub mod data_sources;
 
 pub struct Container {
     pub open_bank_account: OpenBankAccount,
