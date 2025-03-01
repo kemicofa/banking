@@ -2,6 +2,8 @@ use std::fmt;
 
 use serde::{Deserialize, Serialize};
 
+use super::transaction::{Transaction};
+
 /// A bank account is a financial account provided by a bank or other financial institution to an
 /// individual or business entity that allows them to deposit, withdraw, and manage money. Bank
 /// accounts can be used for various purposes such as storing money, receiving and making payments,
@@ -12,7 +14,7 @@ pub struct BankAccount {
     pub fullname: String,
     /// The account balance is made up of all posted credit and debit transactions.
     /// It’s the amount you have in the account before any pending charges are added.
-    pub account_balance: i64,
+    pub account_balance: u64,
 }
 
 impl BankAccount {
@@ -29,7 +31,7 @@ impl BankAccount {
     /// let bank_account = BankAccount::new("my-unique-id", "Kevin", 0);
     /// ```
     ///
-    pub fn new(id: String, fullname: String, default_account_balance: i64) -> BankAccount {
+    pub fn new(id: String, fullname: String, default_account_balance: u64) -> BankAccount {
         // TODO: add validation for default account balance
         BankAccount {
             id,
@@ -38,18 +40,18 @@ impl BankAccount {
         }
     }
 
-    /// Adding funds to a bank account means depositing money into the account,
-    /// which increases the balance available for the account holder to use.
-    /// This can be done by physically depositing cash or a check at a bank
-    /// branch, using an ATM to deposit cash or checks, or electronically
-    /// transferring funds from another account.
-    pub fn add_funds(&mut self, funds: i64) {
-        self.account_balance += funds;
-    }
+    pub fn apply_transaction(&mut self, transaction: &Transaction) -> Result<(), &str> {
+        if self.id == transaction.from {
+            self.account_balance -= transaction.amount;
+            return Ok(());
+        }
 
-    pub fn remove_funds(&mut self, amount: i64) {
-        let new_account_balance = self.account_balance - amount;
-        self.account_balance = new_account_balance;
+        if self.id == transaction.to {
+            self.account_balance += transaction.amount;
+            return Ok(());
+        }
+
+        Err("Could not find matching bank account id")
     }
 }
 
@@ -74,21 +76,5 @@ mod tests {
         let account =
             BankAccount::new("__BANK_ACCOUNT_ID__".to_string(), FULLNAME.to_string(), 100);
         assert_eq!(account.account_balance, 100);
-    }
-
-    #[test]
-    fn it_should_be_able_to_add_funds() {
-        let mut account =
-            BankAccount::new("__BANK_ACOUNT_ID__".to_string(), FULLNAME.to_string(), 100);
-        account.add_funds(100);
-        assert_eq!(account.account_balance, 200);
-    }
-
-    #[test]
-    fn it_should_be_able_to_remove_funds() {
-        let mut account =
-            BankAccount::new("__BANK_ACOUNT_ID__".to_string(), FULLNAME.to_string(), 100);
-        account.remove_funds(100);
-        assert_eq!(account.account_balance, 0);
     }
 }

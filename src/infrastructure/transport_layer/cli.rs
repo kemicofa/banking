@@ -20,7 +20,7 @@ enum Command {
     InitiateTransaction {
         from: String,
         to: String,
-        amount: i64,
+        amount: u64,
     },
 }
 

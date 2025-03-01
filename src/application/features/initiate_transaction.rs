@@ -31,7 +31,7 @@ impl InitiateTransaction {
 pub struct TransactionPayload {
     pub to: String,
     pub from: String,
-    pub amount: i64,
+    pub amount: u64,
 }
 
 impl Feature<TransactionPayload, Transaction> for InitiateTransaction {
@@ -48,8 +48,8 @@ impl Feature<TransactionPayload, Transaction> for InitiateTransaction {
             .get(payload.to.clone())
             .unwrap();
 
-        bank_account_from.remove_funds(payload.amount);
-        bank_account_to.add_funds(payload.amount);
+        bank_account_from.apply_transaction(&transaction);
+        bank_account_to.apply_transaction(&transaction);
 
         self.bank_account_repository
             .update(bank_account_from)
